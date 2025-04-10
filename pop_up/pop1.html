@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Record Popup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <!-- ✅ Success Toast Popup (Hidden by default) -->
+    <div
+      id="successPopup"
+      class="fixed top-5 left-1/2 transform -translate-x-1/2 bg-[#2E844A] text-white flex items-center justify-between p-4 rounded-md shadow-md gap-4 max-w-xl w-full z-50 hidden"
+    >
+      <div class="flex items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          stroke-width="2"
+        >
+          <path d="M5 13l4 4L19 7" />
+        </svg>
+        <span class="text-sm font-medium"
+          >Edit successful! Your record now reflects the latest changes.</span
+        >
+      </div>
+      <img
+        src="./Close icon button1.png"
+        alt="close"
+        onclick="handleCloseSuccess()"
+        class="w-4 h-4 cursor-pointer"
+      />
+    </div>
+
+    <!-- ✅ Main Edit Modal -->
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40"
+    >
+      <div
+        id="editPopup"
+        class="bg-white rounded-xl shadow-lg w-full max-w-xl p-6 relative"
+      >
+        <!-- Top Right Close -->
+        <div class="flex justify-end mb-4">
+          <img
+            src="./Close icon button.png"
+            alt="close"
+            class="cursor-pointer"
+            onclick="closeEditPopup()"
+          />
+        </div>
+
+        <!-- Center Icon -->
+        <div class="flex justify-center mb-4">
+          <img src="./Icon Container.png" alt="edit icon" />
+        </div>
+
+        <!-- Title -->
+        <h2 class="text-center text-xl font-bold mb-6">
+          Are you sure want to edit this record?
+        </h2>
+
+        <!-- Description -->
+        <p class="text-center text-[#666666] text-md mb-6 font-light">
+          Modifying this record will update the existing data. Ensure all
+          changes are correct before proceeding. This action cannot be undone.
+        </p>
+
+        <!-- Label -->
+        <p class="text-md font-bold text-[#666666] mb-2">
+          To edit the record, please type ‘EDIT’ in uppercase letters in the box
+          below to proceed.
+        </p>
+
+        <!-- Input -->
+        <input
+          id="editInput"
+          type="text"
+          placeholder="Enter here..."
+          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 mb-6"
+        />
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-3">
+          <button
+            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
+            onclick="closeEditPopup()"
+          >
+            Cancel
+          </button>
+          <button
+            onclick="handleEdit()"
+            class="px-4 py-2 bg-[#2E844A] text-white rounded-md hover:bg-green-700"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function handleEdit() {
+        const input = document.getElementById("editInput").value;
+        if (input === "EDIT") {
+          document.getElementById("successPopup").classList.remove("hidden");
+          closeEditPopup();
+
+          // Auto hide after 3 seconds
+          setTimeout(() => {
+            handleCloseSuccess();
+          }, 3000);
+        } else {
+          alert("Please type ‘EDIT’ in uppercase to proceed.");
+        }
+      }
+
+      function handleCloseSuccess() {
+        document.getElementById("successPopup").classList.add("hidden");
+      }
+
+      function closeEditPopup() {
+        document.getElementById("editPopup").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
